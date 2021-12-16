@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/trainingFragment">
+
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="de.freedeebee.musikmacher.views.training.TrainingFragment"
+        android:label="fragment_training"
+        tools:layout="@layout/fragment_training" />
+    <fragment
+        android:id="@+id/userSettingsFragment"
+        android:name="de.freedeebee.musikmacher.views.settings.UserSettingsFragment"
+        android:label="fragment_user_settings"
+        tools:layout="@layout/fragment_user_settings" />
+    <fragment
+        android:id="@+id/userStatisticsFragment"
+        android:name="de.freedeebee.musikmacher.views.statistics.UserStatisticsFragment"
+        android:label="fragment_user_statistics"
+        tools:layout="@layout/fragment_user_statistics" />
+</navigation>
