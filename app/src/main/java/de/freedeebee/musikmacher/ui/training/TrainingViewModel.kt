@@ -46,9 +46,10 @@ class TrainingViewModel(private val dao: TrainingSessionDao): ViewModel() {
     private fun startTraining() {
         viewModelScope.launch {
             val session = TrainingSession(timeStarted = System.currentTimeMillis())
-            dao.save(session)
-            Log.i("TrainingViewModel", "Training session started at ${convertLongToDateString(session.timeStarted!!)}.")
-            activeSession.value = dao.getLatestSession()
+            val id = dao.save(session)
+            session.id = id
+            Log.i("TrainingViewModel", "Training session ${session.id} started at ${convertLongToDateString(session.timeStarted!!)}.")
+            activeSession.value = session
         }
     }
 

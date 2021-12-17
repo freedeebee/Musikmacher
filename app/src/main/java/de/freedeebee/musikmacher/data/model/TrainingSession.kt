@@ -19,7 +19,7 @@ data class TrainingSession(
 interface TrainingSessionDao {
 
     @Insert
-    suspend fun save(trainingSession: TrainingSession)
+    suspend fun save(trainingSession: TrainingSession): Long
 
     @Update
     suspend fun update(trainingSession: TrainingSession)
