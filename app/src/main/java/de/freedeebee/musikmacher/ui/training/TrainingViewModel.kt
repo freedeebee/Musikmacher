@@ -10,15 +10,36 @@ import java.lang.IllegalArgumentException
 
 class TrainingViewModel(private val dao: TrainingSessionDao): ViewModel() {
 
-    private var _trainingStarted = MutableLiveData<Boolean>()
-    val trainingStarted: LiveData<Boolean>
-        get() = _trainingStarted
+    private var activeSession = MutableLiveData<TrainingSession?>()
+
+    val stopButtonVisible = Transformations.map(activeSession) {
+        null != it
+    }
+
+    init {
+        initializeActiveSession()
+    }
+
+    private fun initializeActiveSession() {
+        viewModelScope.launch {
+            activeSession.value = getActiveSession()
+        }
+    }
+
+    private suspend fun getActiveSession(): TrainingSession? {
+        val session = dao.getLatestSession()
+        if (session?.timeEnded == null) {
+            Log.i("TrainingViewModel", "Active session detected: ID ${session?.id}")
+            return session
+        }
+        return null
+    }
 
     fun toggleTraining() {
-        when (_trainingStarted.value){
-            false -> startTraining()
-            true -> stopTraining()
-            else -> startTraining()
+        if (activeSession.value != null) {
+            stopTraining()
+        } else {
+            startTraining()
         }
     }
 
@@ -27,13 +48,19 @@ class TrainingViewModel(private val dao: TrainingSessionDao): ViewModel() {
             val session = TrainingSession(timeStarted = System.currentTimeMillis())
             dao.save(session)
             Log.i("TrainingViewModel", "Training session started at ${convertLongToDateString(session.timeStarted!!)}.")
-            _trainingStarted.value = true
+            activeSession.value = dao.getLatestSession()
         }
     }
 
     private fun stopTraining() {
-        Log.i("TrainingViewModel", "Training session stopped.")
-        _trainingStarted.value = false
+        viewModelScope.launch {
+            val session = activeSession.value!!
+            session.timeEnded = System.currentTimeMillis()
+            dao.update(session)
+            Log.i("TrainingViewModel", "Training session ${session.id} stopped at ${convertLongToDateString(session.timeStarted!!)}.")
+
+            activeSession.value = null
+        }
     }
 
 }

@@ -21,4 +21,10 @@ interface TrainingSessionDao {
     @Insert
     suspend fun save(trainingSession: TrainingSession)
 
+    @Update
+    suspend fun update(trainingSession: TrainingSession)
+
+    @Query("SELECT * FROM training_session ORDER BY time_started_millis DESC LIMIT 1")
+    suspend fun getLatestSession(): TrainingSession?
+
 }

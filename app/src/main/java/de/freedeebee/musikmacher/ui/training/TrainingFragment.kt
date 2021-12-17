@@ -34,6 +34,16 @@ class TrainingFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)[TrainingViewModel::class.java]
 
         // TODO: toggle play/pause icon
+        viewModel.stopButtonVisible.observe(viewLifecycleOwner) { stopButtonVisible ->
+            if (stopButtonVisible) {
+                binding.stopButton.visibility = View.VISIBLE
+                binding.startButton.visibility = View.GONE
+            }
+            else {
+                binding.stopButton.visibility = View.GONE
+                binding.startButton.visibility = View.VISIBLE
+            }
+        }
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
