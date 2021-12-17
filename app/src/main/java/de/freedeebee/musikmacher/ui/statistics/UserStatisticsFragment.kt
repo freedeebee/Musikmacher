@@ -1,4 +1,4 @@
-package de.freedeebee.musikmacher.views.statistics
+package de.freedeebee.musikmacher.ui.statistics
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

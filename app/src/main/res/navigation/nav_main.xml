@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/trainingFragment"
-        android:name="de.freedeebee.musikmacher.views.training.TrainingFragment"
+        android:name="de.freedeebee.musikmacher.ui.training.TrainingFragment"
         android:label="fragment_training"
         tools:layout="@layout/fragment_training" />
     <fragment
         android:id="@+id/userSettingsFragment"
-        android:name="de.freedeebee.musikmacher.views.settings.UserSettingsFragment"
+        android:name="de.freedeebee.musikmacher.ui.settings.UserSettingsFragment"
         android:label="fragment_user_settings"
         tools:layout="@layout/fragment_user_settings" />
     <fragment
         android:id="@+id/userStatisticsFragment"
-        android:name="de.freedeebee.musikmacher.views.statistics.UserStatisticsFragment"
+        android:name="de.freedeebee.musikmacher.ui.statistics.UserStatisticsFragment"
         android:label="fragment_user_statistics"
         tools:layout="@layout/fragment_user_statistics" />
 </navigation>

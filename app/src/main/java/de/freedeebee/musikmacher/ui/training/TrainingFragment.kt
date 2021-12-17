@@ -1,4 +1,4 @@
-package de.freedeebee.musikmacher.views.training
+package de.freedeebee.musikmacher.ui.training
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import de.freedeebee.musikmacher.data.local.MusikmacherDatabase
 import de.freedeebee.musikmacher.databinding.FragmentTrainingBinding
 
 class TrainingFragment : Fragment() {
@@ -26,7 +27,11 @@ class TrainingFragment : Fragment() {
             false
         )
 
-        viewModel = ViewModelProvider(this)[TrainingViewModel::class.java]
+        val application = requireNotNull(this.activity).application
+        val dao = MusikmacherDatabase.getInstance(application.applicationContext).trainingSessionDao
+        val viewModelFactory = TrainingViewModelFactory(dao)
+
+        viewModel = ViewModelProvider(this, viewModelFactory)[TrainingViewModel::class.java]
 
         // TODO: toggle play/pause icon
 

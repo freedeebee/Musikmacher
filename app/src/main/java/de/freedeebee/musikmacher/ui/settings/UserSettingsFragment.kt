@@ -1,4 +1,4 @@
-package de.freedeebee.musikmacher.views.settings
+package de.freedeebee.musikmacher.ui.settings
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
