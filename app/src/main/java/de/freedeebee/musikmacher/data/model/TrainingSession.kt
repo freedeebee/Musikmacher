@@ -1,5 +1,6 @@
 package de.freedeebee.musikmacher.data.model
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Entity(tableName = "training_session")
@@ -26,5 +27,8 @@ interface TrainingSessionDao {
 
     @Query("SELECT * FROM training_session ORDER BY time_started_millis DESC LIMIT 1")
     suspend fun getLatestSession(): TrainingSession?
+
+    @Query("SELECT * FROM training_session WHERE time_ended_millis IS NOT NULL ORDER BY time_started_millis DESC")
+    fun getCompletedSessions(): LiveData<List<TrainingSession>>
 
 }

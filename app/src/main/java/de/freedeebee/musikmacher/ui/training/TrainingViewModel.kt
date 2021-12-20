@@ -12,6 +12,8 @@ class TrainingViewModel(private val dao: TrainingSessionDao): ViewModel() {
 
     private var activeSession = MutableLiveData<TrainingSession?>()
 
+    val completedTrainings = dao.getCompletedSessions()
+
     val stopButtonVisible = Transformations.map(activeSession) {
         null != it
     }

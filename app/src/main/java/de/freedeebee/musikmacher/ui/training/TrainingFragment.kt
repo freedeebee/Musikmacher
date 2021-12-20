@@ -33,7 +33,6 @@ class TrainingFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory)[TrainingViewModel::class.java]
 
-        // TODO: toggle play/pause icon
         viewModel.stopButtonVisible.observe(viewLifecycleOwner) { stopButtonVisible ->
             if (stopButtonVisible) {
                 binding.stopButton.visibility = View.VISIBLE
@@ -42,6 +41,22 @@ class TrainingFragment : Fragment() {
             else {
                 binding.stopButton.visibility = View.GONE
                 binding.startButton.visibility = View.VISIBLE
+            }
+        }
+
+        val adapter = TrainingItemAdapter()
+        binding.sessionListView.adapter = adapter
+
+        viewModel.completedTrainings.observe(viewLifecycleOwner) {
+            it?.let {
+                if (it.isNotEmpty()) {
+                    binding.nothingTrackedText.visibility = View.GONE
+                    binding.sessionListView.visibility = View.VISIBLE
+                } else {
+                    binding.nothingTrackedText.visibility = View.VISIBLE
+                    binding.sessionListView.visibility = View.GONE
+                }
+                adapter.submitList(it)
             }
         }
 
