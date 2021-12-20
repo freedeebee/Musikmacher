@@ -56,7 +56,9 @@ class TrainingFragment : Fragment() {
                     binding.nothingTrackedText.visibility = View.VISIBLE
                     binding.sessionListView.visibility = View.GONE
                 }
-                adapter.submitList(it)
+                adapter.submitList(it) {
+                    binding.sessionListView.scrollToPosition(0)
+                }
             }
         }
 
