@@ -47,6 +47,8 @@ class TrainingFragment : Fragment() {
         val adapter = TrainingItemAdapter()
         binding.sessionListView.adapter = adapter
 
+        // TODO: create click listener for list items to navigate to TrainingEditFragment
+
         viewModel.completedTrainings.observe(viewLifecycleOwner) {
             it?.let {
                 if (it.isNotEmpty()) {

@@ -25,6 +25,12 @@ interface TrainingSessionDao {
     @Update
     suspend fun update(trainingSession: TrainingSession)
 
+    @Delete
+    suspend fun delete(trainingSession: TrainingSession)
+
+    @Query("SELECT * FROM training_session WHERE id == :sessionId")
+    fun get(sessionId: Long): LiveData<TrainingSession>
+
     @Query("SELECT * FROM training_session ORDER BY time_started_millis DESC LIMIT 1")
     suspend fun getLatestSession(): TrainingSession?
 

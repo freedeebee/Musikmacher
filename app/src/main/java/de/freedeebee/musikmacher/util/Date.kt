@@ -5,7 +5,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 fun convertLongToDateString(systemTime: Long): String {
-    return SimpleDateFormat("EEE dd.MM.yyyy' : 'HH:mm", Locale.GERMAN)
+    return SimpleDateFormat("EEE dd.MM.yyyy", Locale.GERMAN)
         .format(systemTime).toString()
 }
 
