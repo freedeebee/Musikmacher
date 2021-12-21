@@ -18,6 +18,10 @@ class TrainingViewModel(private val dao: TrainingSessionDao): ViewModel() {
         null != it
     }
 
+    private val _navigateToSession = MutableLiveData<Long?>()
+    val navigateToSession: LiveData<Long?>
+        get() = _navigateToSession
+
     init {
         initializeActiveSession()
     }
@@ -64,6 +68,14 @@ class TrainingViewModel(private val dao: TrainingSessionDao): ViewModel() {
 
             activeSession.value = null
         }
+    }
+
+    fun onListItemClicked(sessionId: Long) {
+        _navigateToSession.value = sessionId
+    }
+
+    fun onListItemNavigated() {
+        _navigateToSession.value = null
     }
 
 }

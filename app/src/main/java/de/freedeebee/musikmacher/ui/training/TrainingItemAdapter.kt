@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import de.freedeebee.musikmacher.data.model.TrainingSession
 import de.freedeebee.musikmacher.databinding.TrainingItemBinding
 
-class TrainingItemAdapter: ListAdapter<TrainingSession, TrainingItemAdapter.TrainingItemViewHolder>(TrainingItemDiffCallback()) {
+class TrainingItemAdapter(val onClick: (sessionId: Long) -> Unit): ListAdapter<TrainingSession, TrainingItemAdapter.TrainingItemViewHolder>(TrainingItemDiffCallback()) {
 
     class TrainingItemViewHolder(val binding: TrainingItemBinding): RecyclerView.ViewHolder(binding.root) {
 
@@ -24,8 +24,9 @@ class TrainingItemAdapter: ListAdapter<TrainingSession, TrainingItemAdapter.Trai
             }
         }
 
-        fun bind(item: TrainingSession) {
+        fun bind(item: TrainingSession, onClick: (sessionId: Long) -> Unit) {
             binding.session = TrainingItem(item)
+            binding.root.setOnClickListener { onClick(item.id) }
         }
     }
 
@@ -34,7 +35,7 @@ class TrainingItemAdapter: ListAdapter<TrainingSession, TrainingItemAdapter.Trai
     }
 
     override fun onBindViewHolder(holder: TrainingItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onClick)
     }
 }
 

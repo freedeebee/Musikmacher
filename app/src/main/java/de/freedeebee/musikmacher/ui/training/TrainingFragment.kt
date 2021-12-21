@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import de.freedeebee.musikmacher.data.local.MusikmacherDatabase
 import de.freedeebee.musikmacher.databinding.FragmentTrainingBinding
 
@@ -44,10 +45,18 @@ class TrainingFragment : Fragment() {
             }
         }
 
-        val adapter = TrainingItemAdapter()
+        val adapter = TrainingItemAdapter { sessionId ->
+            viewModel.onListItemClicked(sessionId)
+        }
         binding.sessionListView.adapter = adapter
 
-        // TODO: create click listener for list items to navigate to TrainingEditFragment
+        viewModel.navigateToSession.observe(viewLifecycleOwner) { sessionId ->
+            sessionId?.let {
+                val action = TrainingFragmentDirections.actionTrainingFragmentToTrainingEditFragment(sessionId)
+                findNavController().navigate(action)
+                viewModel.onListItemNavigated()
+            }
+        }
 
         viewModel.completedTrainings.observe(viewLifecycleOwner) {
             it?.let {
